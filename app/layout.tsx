@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { CustomCursor } from "@/components/custom-cursor"
 import { SmoothScrolling } from "@/components/smooth-scrolling"
 import "./globals.css"
+import AuthProvider from "@/context/AuthProvider"
 
 const geistSans = Geist({
   variable: "--font-sans",
@@ -22,6 +23,8 @@ export const metadata: Metadata = {
   generator: "Next.js",
 }
 
+import { Toaster } from 'sonner';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,13 +32,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <AuthProvider>
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
         <SmoothScrolling>
           <CustomCursor />
           {children}
         </SmoothScrolling>
         <Analytics />
+        <Toaster richColors />
       </body>
+      </AuthProvider>
     </html>
-  )
+  );
 }

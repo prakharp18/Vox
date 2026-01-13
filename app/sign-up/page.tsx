@@ -6,7 +6,7 @@ import Link from "next/link"
 import { useState } from "react"
 import { Shader, Swirl, ChromaFlow } from "shaders/react"
 
-export default function SignupPage() {
+export default function SignUpPage() {
     return (
         <main className="min-h-screen w-full bg-[#121212] flex items-center justify-center p-4 md:p-8">
             <motion.div
@@ -32,9 +32,9 @@ export default function SignupPage() {
                         />
                         <ChromaFlow
                             baseColor="#000000"
-                            upColor="#14532d"   // Green 900
-                            downColor="#15803d" // Green 700
-                            leftColor="#166534" // Green 800
+                            upColor="#14532d"
+                            downColor="#15803d"
+                            leftColor="#166534"
                             rightColor="#10b981"
                             intensity={0.7}
                             radius={1.8}
@@ -95,7 +95,7 @@ export default function SignupPage() {
                     </form>
 
                     <p className="mt-10 text-center text-sm text-zinc-500">
-                        Already have an account? <Link href="/login" className="text-zinc-900 font-medium hover:underline">Log In</Link>
+                        Already have an account? <Link href="/sign-in" className="text-zinc-900 font-medium hover:underline">Sign In</Link>
                     </p>
                 </div>
             </motion.div>

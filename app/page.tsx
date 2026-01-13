@@ -99,14 +99,14 @@ export default function Home() {
             Share your true thoughts, secretly.
           </p>
           <div className="flex gap-4 mt-4">
-            <Link href="/signup">
+            <Link href="/sign-up">
               <MagneticButton size="lg" variant="primary">
                 Get Started
               </MagneticButton>
             </Link>
-            <Link href="/login">
+            <Link href="/sign-in">
               <MagneticButton size="lg" variant="ghost">
-                Login
+                Sign In
               </MagneticButton>
             </Link>
           </div>
