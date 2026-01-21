@@ -1,49 +1,49 @@
-"use client"
+"use client";
 
-import { Shader, Swirl, ChromaFlow } from "shaders/react"
-import Link from "next/link"
-import { GrainOverlay } from "@/components/grain-overlay"
-import { MagneticButton } from "@/components/magnetic-button"
-import { useRef, useEffect, useState } from "react"
+import { Shader, Swirl, ChromaFlow } from "shaders/react";
+import Link from "next/link";
+import { GrainOverlay } from "@/components/grain-overlay";
+import { MagneticButton } from "@/components/magnetic-button";
+import { useRef, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false)
-  const shaderContainerRef = useRef<HTMLDivElement>(null)
+  const [isLoaded, setIsLoaded] = useState(false);
+  const shaderContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const checkShaderReady = () => {
       if (shaderContainerRef.current) {
-        const canvas = shaderContainerRef.current.querySelector("canvas")
+        const canvas = shaderContainerRef.current.querySelector("canvas");
         if (canvas && canvas.width > 0 && canvas.height > 0) {
-          setIsLoaded(true)
-          return true
+          setIsLoaded(true);
+          return true;
         }
       }
-      return false
-    }
+      return false;
+    };
 
-    if (checkShaderReady()) return
+    if (checkShaderReady()) return;
 
     const intervalId = setInterval(() => {
       if (checkShaderReady()) {
-        clearInterval(intervalId)
+        clearInterval(intervalId);
       }
-    }, 100)
+    }, 100);
 
     const fallbackTimer = setTimeout(() => {
-      setIsLoaded(true)
-    }, 1500)
+      setIsLoaded(true);
+    }, 1500);
 
     return () => {
-      clearInterval(intervalId)
-      clearTimeout(fallbackTimer)
-    }
-  }, [])
+      clearInterval(intervalId);
+      clearTimeout(fallbackTimer);
+    };
+  }, []);
 
   return (
     <main className="relative h-screen w-full overflow-hidden bg-background text-foreground">
       <GrainOverlay />
-
 
       <div
         ref={shaderContainerRef}
@@ -54,7 +54,7 @@ export default function Home() {
           <Swirl
             colorA="#CC5500"
             colorB="#FFDB58"
-            speed={0.5}
+            speed={0.8}
             detail={0.6}
             blend={60}
             coarseX={30}
@@ -72,7 +72,7 @@ export default function Home() {
             rightColor="#FFDB58"
             intensity={0.8}
             radius={2.0}
-            momentum={20}
+            momentum={25}
             maskType="alpha"
             opacity={0.9}
           />
@@ -84,15 +84,8 @@ export default function Home() {
         className={`relative z-10 flex h-screen w-full items-center justify-center transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
       >
         <div className="flex flex-col items-center gap-6 text-center px-4">
-          <h1 className="font-sans text-7xl font-light tracking-tighter text-white md:text-9xl flex items-center justify-center gap-0">
-            V
-            <img
-              src="/logo.png"
-              alt="Vox Logo"
-              className="w-[1em] h-[1em] mx-[-0.05em] drop-shadow-2xl animate-pulse scale-110"
-              style={{ filter: "invert(1)" }}
-            />
-            X
+          <h1 className="font-sans text-7xl font-light tracking-tighter text-white md:text-9xl">
+            VOX
           </h1>
           <p className="max-w-md text-lg text-slate-300 md:text-xl font-light tracking-wide">
             The sound of anonymity. <br />
@@ -119,5 +112,5 @@ export default function Home() {
         }
       `}</style>
     </main>
-  )
+  );
 }

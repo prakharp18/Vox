@@ -5,17 +5,16 @@ import { useMemo, useRef } from "react";
 import * as THREE from "three";
 import { shaderMaterial } from "@react-three/drei";
 
-
 const GradientMaterial = shaderMaterial(
-    {
-        uTime: 0,
-        uColor1: new THREE.Color("#000000"),
-        uColor2: new THREE.Color("#1a202c"),
-        uColor3: new THREE.Color("#ea580c"),
-        uColor4: new THREE.Color("#1e3a8a"),
-    },
+  {
+    uTime: 0,
+    uColor1: new THREE.Color("#000000"),
+    uColor2: new THREE.Color("#1a202c"),
+    uColor3: new THREE.Color("#ea580c"),
+    uColor4: new THREE.Color("#1e3a8a"),
+  },
 
-    `
+  `
     varying vec2 vUv;
     void main() {
       vUv = uv;
@@ -23,7 +22,7 @@ const GradientMaterial = shaderMaterial(
     }
   `,
 
-    `
+  `
     uniform float uTime;
     uniform vec3 uColor1;
     uniform vec3 uColor2;
@@ -82,45 +81,43 @@ const GradientMaterial = shaderMaterial(
 
       gl_FragColor = vec4(color, 1.0);
     }
-  `
+  `,
 );
-
 
 extend({ GradientMaterial });
 
-
 declare global {
-    namespace JSX {
-        interface IntrinsicElements {
-            gradientMaterial: any;
-        }
+  namespace JSX {
+    interface IntrinsicElements {
+      gradientMaterial: any;
     }
+  }
 }
 
 function GradientMesh() {
-    const materialRef = useRef<any>(null);
+  const materialRef = useRef<any>(null);
 
-    useFrame((state) => {
-        if (materialRef.current) {
-            materialRef.current.uTime = state.clock.getElapsedTime();
-        }
-    });
+  useFrame((state) => {
+    if (materialRef.current) {
+      materialRef.current.uTime = state.clock.getElapsedTime();
+    }
+  });
 
-    return (
-        <mesh position={[0, 0, 0]} scale={[10, 10, 1]}>
-            <planeGeometry args={[2, 2]} />
+  return (
+    <mesh position={[0, 0, 0]} scale={[10, 10, 1]}>
+      <planeGeometry args={[2, 2]} />
 
-            <gradientMaterial ref={materialRef} />
-        </mesh>
-    );
+      <gradientMaterial ref={materialRef} />
+    </mesh>
+  );
 }
 
 export function ShaderBackground() {
-    return (
-        <div className="fixed inset-0 -z-10 h-full w-full bg-slate-950">
-            <Canvas camera={{ position: [0, 0, 1] }}>
-                <GradientMesh />
-            </Canvas>
-        </div>
-    );
+  return (
+    <div className="fixed inset-0 -z-10 h-full w-full bg-slate-950">
+      <Canvas camera={{ position: [0, 0, 1] }}>
+        <GradientMesh />
+      </Canvas>
+    </div>
+  );
 }
