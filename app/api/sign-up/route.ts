@@ -16,7 +16,6 @@ export async function POST(request: Request) {
     });
 
     if (existingVerifiedUserByUsername) {
-      console.log("Username taken:", username);
       return Response.json(
         {
           success: false,
@@ -31,7 +30,6 @@ export async function POST(request: Request) {
 
     if (existingUserByEmail) {
       if (existingUserByEmail.isVerified) {
-        console.log("Email already exists and verified:", email);
         return Response.json(
           {
             success: false,

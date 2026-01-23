@@ -263,7 +263,7 @@ export default function SignUp() {
               colorA="#001a00"
               colorB="#064e3b"
               speed={0.8}
-              detail={0.5}
+              detail={0.3}
               blend={40}
               coarseX={20}
               coarseY={20}

@@ -82,7 +82,7 @@ export default function SignInPage() {
               colorA="#020024"
               colorB="#090979"
               speed={0.8}
-              detail={0.4}
+              detail={0.3}
               blend={40}
               coarseX={20}
               coarseY={20}

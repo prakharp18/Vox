@@ -1,79 +1,75 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export function CustomCursor() {
-  const outerRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
-  const positionRef = useRef({ x: 0, y: 0 });
-  const targetPositionRef = useRef({ x: 0, y: 0 });
-  const isPointerRef = useRef(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false); 
+  const cursorRef = useRef<HTMLDivElement>(null);
+  
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
+  
+  const springConfig = { damping: 25, stiffness: 400, mass: 0.2 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    let animationFrameId: number;
+    const mediaQuery = window.matchMedia('(pointer: fine)');
+    if (!mediaQuery.matches) return;
 
-    const lerp = (start: number, end: number, factor: number) => {
-      return start + (end - start) * factor;
-    };
+    setIsVisible(true);
 
-    const updateCursor = () => {
-      positionRef.current.x = lerp(
-        positionRef.current.x,
-        targetPositionRef.current.x,
-        0.15,
-      );
-      positionRef.current.y = lerp(
-        positionRef.current.y,
-        targetPositionRef.current.y,
-        0.15,
-      );
-
-      if (outerRef.current && innerRef.current) {
-        const scale = isPointerRef.current ? 1.5 : 1;
-        const innerScale = isPointerRef.current ? 0.5 : 1;
-
-        outerRef.current.style.transform = `translate3d(${positionRef.current.x}px, ${positionRef.current.y}px, 0) translate(-50%, -50%) scale(${scale})`;
-        innerRef.current.style.transform = `translate3d(${positionRef.current.x}px, ${positionRef.current.y}px, 0) translate(-50%, -50%) scale(${innerScale})`;
-      }
-
-      animationFrameId = requestAnimationFrame(updateCursor);
-    };
-
+    document.body.style.cursor = 'none';
+    
     const handleMouseMove = (e: MouseEvent) => {
-      targetPositionRef.current = { x: e.clientX, y: e.clientY };
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
 
       const target = e.target as HTMLElement;
-      isPointerRef.current =
-        window.getComputedStyle(target).cursor === "pointer" ||
+      const isInteractive = 
         target.tagName === "BUTTON" ||
-        target.tagName === "A";
+        target.tagName === "A" ||
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        target.closest("button") !== null ||
+        target.closest("a") !== null ||
+        target.closest('[role="button"]') !== null;
+
+      setIsHovered(isInteractive);
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    animationFrameId = requestAnimationFrame(updateCursor);
-
+    
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(animationFrameId);
+        window.removeEventListener("mousemove", handleMouseMove);
+        document.body.style.cursor = 'auto'; 
     };
-  }, []);
+  }, [mouseX, mouseY]);
+
+  if (!isVisible) return null;
 
   return (
     <>
-      <div
-        ref={outerRef}
-        className="pointer-events-none fixed left-0 top-0 z-50 mix-blend-difference will-change-transform"
-        style={{ contain: "layout style paint" }}
+      <motion.div
+        ref={cursorRef}
+        className="pointer-events-none fixed left-0 top-0 z-[100000]"
+        style={{
+          x: springX,
+          y: springY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
       >
-        <div className="h-4 w-4 rounded-full border-2 border-white" />
-      </div>
-      <div
-        ref={innerRef}
-        className="pointer-events-none fixed left-0 top-0 z-50 mix-blend-difference will-change-transform"
-        style={{ contain: "layout style paint" }}
-      >
-        <div className="h-2 w-2 rounded-full bg-white" />
-      </div>
+        <motion.div
+          animate={{
+            scale: isHovered ? 2.5 : 1, 
+          }}
+          transition={{ duration: 0.15, ease: "easeOut" }}
+          className="h-3 w-3 rounded-full bg-white border border-black/20 shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+        />
+      </motion.div>
     </>
   );
 }
