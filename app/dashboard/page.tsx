@@ -13,9 +13,11 @@ import {
   ExternalLink,
   RefreshCcw,
   X,
-  Loader2
+  Loader2,
+  Share2
 } from "lucide-react";
 import { DashboardWindow } from "@/components/dashboard/dashboard-window";
+import { ShareModal } from "@/components/share-modal";
 import { MagneticButton } from "@/components/magnetic-button";
 import { toast } from "sonner";
 import { Shader, Swirl } from "shaders/react";
@@ -131,6 +133,11 @@ export default function Dashboard() {
     toast.success("Link Copied!", { description: "Share it with your friends." });
   };
 
+  const handleCopyMessage = (content: string) => {
+    navigator.clipboard.writeText(content);
+    toast.success("Message Copied to Clipboard");
+  };
+
   if (!session || !session.user) {
       return (
           <div className="min-h-screen bg-[#050505] flex flex-col items-center justify-center p-4">
@@ -227,7 +234,7 @@ export default function Dashboard() {
                                 key={message._id as unknown as string} 
                                 className="bg-zinc-900/40 border border-zinc-800/60 p-5 rounded-2xl relative group hover:border-zinc-700 transition-colors"
                             >
-                                <div className="absolute top-3 right-3 opacity-100">
+                                <div className="absolute top-3 right-3 opacity-100 flex gap-2">
                                     <AlertDialog>
                                         <AlertDialogTrigger asChild>
                                             <button className="p-2 bg-zinc-800/50 text-zinc-400 rounded-full hover:bg-red-500 hover:text-white transition-all">
@@ -247,6 +254,23 @@ export default function Dashboard() {
                                             </AlertDialogFooter>
                                         </AlertDialogContent>
                                     </AlertDialog>
+                                    
+                                    <button 
+                                        onClick={() => handleCopyMessage(message.content)}
+                                        className="p-2 bg-zinc-800/50 text-zinc-400 rounded-full hover:bg-zinc-700 hover:text-white transition-all"
+                                    >
+                                        <Copy size={14} />
+                                    </button>
+
+                                    <ShareModal 
+                                        message={message.content} 
+                                        username={username}
+                                        trigger={
+                                            <button className="p-2 bg-zinc-800/50 text-zinc-400 rounded-full hover:bg-zinc-700 hover:text-white transition-all">
+                                                <Share2 size={14} />
+                                            </button>
+                                        }
+                                    />
                                 </div>
                                 
                                 <p className="text-zinc-200 text-lg font-light leading-relaxed">
@@ -278,7 +302,6 @@ export default function Dashboard() {
         >
              <div className="h-full flex flex-col gap-4 p-2">
                  
-                 {/* Quick Actions */}
                  <div className="space-y-3">
                      <div className="flex items-center justify-between p-4 bg-zinc-900/30 rounded-2xl border border-zinc-800/50">
                         <span className="text-zinc-300 text-sm font-medium">Accept Messages</span>

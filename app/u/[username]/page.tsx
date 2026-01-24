@@ -23,6 +23,12 @@ import { ApiResponse } from '@/types/ApiResponse';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { messageSchema } from '@/schemas/messageSchema';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 const specialChar = '||';
 
@@ -112,11 +118,18 @@ export default function SendMessage() {
     <main className="h-screen w-full bg-black text-white flex items-center justify-center p-4 overflow-hidden">
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900/40 via-black to-black" />
 
-      <div className="absolute top-6 right-6 z-50 flex items-center gap-2 bg-zinc-900/50 border border-zinc-800 px-3 py-1.5 rounded-full backdrop-blur-md">
-         <div className={`w-2 h-2 rounded-full ${isCheckingDB ? 'bg-yellow-500' : 'bg-green-500'} animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.5)]`} />
-         <span className="text-[10px] uppercase font-mono tracking-widest text-zinc-400">
-            {isCheckingDB ? 'CONNECTING...' : 'SYSTEM ONLINE'}
-         </span>
+      <div className="absolute top-6 right-6 z-50 flex items-center gap-4">
+         <Link href="/sign-up">
+            <Button variant="outline" size="sm" className="h-8 border-zinc-800 bg-black/50 hover:bg-zinc-900 text-zinc-300 hover:text-white backdrop-blur-md rounded-full text-xs font-medium px-4">
+                Join Vox
+            </Button>
+         </Link>
+         <div className="flex items-center gap-2 bg-zinc-900/50 border border-zinc-800 px-3 py-1.5 rounded-full backdrop-blur-md">
+            <div className={`w-2 h-2 rounded-full ${isCheckingDB ? 'bg-yellow-500' : 'bg-green-500'} animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.5)]`} />
+            <span className="text-[10px] uppercase font-mono tracking-widest text-zinc-400">
+                {isCheckingDB ? 'CONNECTING...' : 'SYSTEM ONLINE'}
+            </span>
+         </div>
       </div>
 
       <div className="relative z-10 w-full max-w-5xl grid grid-cols-1 md:grid-cols-12 gap-4 h-full md:h-[600px]">
@@ -128,6 +141,15 @@ export default function SendMessage() {
                 </h1>
                 <p className="text-zinc-400 mt-1 text-sm md:text-base">
                     Sending to <span className="text-white font-semibold">@{username}</span>
+                {isAcceptingMessages ? (
+                   <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                     Accepting Messages
+                   </span>
+                ) : (
+                  <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-500/10 text-red-500 border border-red-500/20">
+                     Offline
+                   </span>
+                )}
                 </p>
             </div>
 
@@ -192,7 +214,7 @@ export default function SendMessage() {
 
         <div className="md:col-span-5 flex flex-col gap-4 h-full">
             
-            <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 flex-1 flex flex-col overflow-hidden relative group">
+            <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 h-[45%] flex flex-col overflow-hidden relative group">
                  <div className="flex justify-between items-center mb-4">
                     <h3 className="text-zinc-300 text-xs font-mono uppercase tracking-widest flex items-center gap-2">
                         <Wand2 className="w-3 h-3 text-purple-500" />
@@ -236,20 +258,58 @@ export default function SendMessage() {
                 </div>
             </div>
 
-            <div className="bg-white text-black border border-zinc-200 rounded-2xl p-6 h-[25%] flex flex-col justify-center items-center text-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-tr from-zinc-200/50 to-transparent pointer-events-none" />
-                <h3 className="font-bold text-lg mb-1 relative z-10">Get your own board</h3>
-                <p className="text-zinc-600 text-xs mb-3 relative z-10">Start receiving anonymous messages today.</p>
-                <Link href="/sign-up" className="relative z-10 w-full">
-                     <Button variant="outline" className="w-full border-2 border-black/10 hover:border-black hover:bg-transparent text-black font-bold rounded-xl h-12">
-                        JOIN VOX
-                    </Button>
-                </Link>
+
+
+            <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 flex-1 flex flex-col overflow-hidden">
+                <h3 className="text-zinc-300 text-xs font-mono uppercase tracking-widest mb-4 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                    FAQ
+                </h3>
+                <div className='overflow-y-auto custom-scrollbar pr-2'>
+                    <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="item-1" className='border-zinc-800'>
+                            <AccordionTrigger className='text-zinc-300 hover:text-white text-sm'>Is my identity hidden?</AccordionTrigger>
+                            <AccordionContent className='text-zinc-500 text-sm'>
+                            Absolutely. We don't track IP addresses or device info for messages. Your identity is 100% secret.
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="item-2" className='border-zinc-800'>
+                            <AccordionTrigger className='text-zinc-300 hover:text-white text-sm'>How do I get a reply?</AccordionTrigger>
+                            <AccordionContent className='text-zinc-500 text-sm'>
+                            If the user chooses to reply, they often post the screenshot on their Instagram Story or Twitter. Keep an eye out there!
+                            </AccordionContent>
+                        </AccordionItem>
+                         <AccordionItem value="item-3" className='border-zinc-800'>
+                            <AccordionTrigger className='text-zinc-300 hover:text-white text-sm'>Can I get my own board?</AccordionTrigger>
+                            <AccordionContent className='text-zinc-500 text-sm'>
+                            Yes! Tap the "Join Vox" button at the top right to create your personal anonymous inbox in seconds.
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="item-4" className='border-zinc-800 border-b-0'>
+                            <AccordionTrigger className='text-zinc-300 hover:text-white text-sm'>Is it harmful?</AccordionTrigger>
+                            <AccordionContent className='text-zinc-500 text-sm'>
+                            Vox is designed for fun and honest feedback. We have strict filters for hate speech and bullying.
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </div>
             </div>
 
         </div>
 
       </div>
+
+      <footer className="absolute bottom-4 z-50 flex flex-col md:flex-row items-center gap-4 text-xs text-zinc-500 font-medium">
+         <span>&copy; {new Date().getFullYear()} Vox</span>
+         <span className="hidden md:block w-1 h-1 rounded-full bg-zinc-800"></span>
+         <a href="mailto:pizzatusestemp4mail@gmail.com?subject=Report%20Abuse" className="hover:text-zinc-300 transition-colors">
+            Report Abuse
+         </a>
+         <span className="hidden md:block w-1 h-1 rounded-full bg-zinc-800"></span>
+         <a href="mailto:pizzatusestemp4mail@gmail.com?subject=Support%20Request" className="hover:text-zinc-300 transition-colors">
+            Contact Support
+         </a>
+      </footer>
     </main>
   );
 }

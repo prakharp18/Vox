@@ -42,7 +42,7 @@ export default function RootLayout({
             {children}
           </SmoothScrolling>
           <Analytics />
-          <Toaster richColors />
+          <Toaster richColors position="bottom-right" />
         </body>
       </AuthProvider>
     </html>
