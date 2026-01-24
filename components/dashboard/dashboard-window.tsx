@@ -9,6 +9,7 @@ interface DashboardWindowProps {
   className?: string;
   title?: string;
   icon?: React.ReactNode;
+  rightContent?: React.ReactNode;
 }
 
 export function DashboardWindow({
@@ -16,6 +17,7 @@ export function DashboardWindow({
   className,
   title,
   icon,
+  rightContent,
 }: DashboardWindowProps) {
   return (
     <motion.div
@@ -29,11 +31,16 @@ export function DashboardWindow({
       )}
     >
       {(title || icon) && (
-        <div className="flex items-center gap-2 px-6 py-4 border-b border-white/5 bg-white/5">
-          {icon && <span className="text-zinc-400">{icon}</span>}
-          <h3 className="text-sm font-medium text-zinc-200 tracking-wide uppercase">
-            {title}
-          </h3>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-white/5">
+          <div className="flex items-center gap-2">
+            {icon && <span className="text-zinc-400">{icon}</span>}
+            {title && (
+              <h3 className="text-sm font-medium text-zinc-200 tracking-wide uppercase">
+                {title}
+              </h3>
+            )}
+          </div>
+          {rightContent}
         </div>
       )}
       

@@ -106,7 +106,6 @@ export default function SendMessage() {
             const response = await axios.get<ApiResponse>(`/api/check-username?username=${username}`);
             setIsAcceptingMessages(response.data.isAcceptingMessages ?? true);
         } catch (error) {
-            // Silently fail or handled by UI state
         } finally {
             setIsCheckingDB(false);
         }

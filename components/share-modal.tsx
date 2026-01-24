@@ -70,7 +70,6 @@ export function ShareModal({ message, username, trigger }: ShareModalProps) {
     setIsDownloading(true);
 
     try {
-      // Small delay to ensure styles are ready
       await new Promise((resolve) => setTimeout(resolve, 100));
 
       const dataUrl = await toPng(cardRef.current, { cacheBust: true, pixelRatio: 2 });
@@ -98,7 +97,8 @@ export function ShareModal({ message, username, trigger }: ShareModalProps) {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="bg-zinc-950 border-zinc-800 text-white max-w-sm p-0 overflow-hidden flex flex-col gap-0">
+      <DialogContent className="bg-zinc-950 border-zinc-800 text-white w-[95vw] max-w-sm p-0 overflow-hidden flex flex-col max-h-[90vh]">
+        <div className="overflow-y-auto flex-1 custom-scrollbar" data-lenis-prevent>
         <div className="p-6 pb-2">
             <DialogTitle className="text-lg font-bold">Share Message</DialogTitle>
             <DialogDescription className="text-zinc-400 text-xs">
@@ -106,7 +106,7 @@ export function ShareModal({ message, username, trigger }: ShareModalProps) {
             </DialogDescription>
         </div>
 
-        {/* Controls */}
+
         <div className="px-6 mb-4 space-y-3">
             <input 
                 type="text" 
@@ -173,7 +173,8 @@ export function ShareModal({ message, username, trigger }: ShareModalProps) {
           </div>
         </div>
 
-        {/* Actions */}
+
+        </div>
         <div className="p-4 bg-zinc-900 border-t border-zinc-800 flex gap-2">
             <Button 
                 onClick={handleDownload}

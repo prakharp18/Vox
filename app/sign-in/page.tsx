@@ -46,15 +46,9 @@ export default function SignInPage() {
       });
 
       if (result?.error) {
-        if (result.error === "CredentialsSignin") {
-          toast.error("Login Failed", {
-            description: "Incorrect username or password",
-          });
-        } else {
-          toast.error("Error", {
-            description: result.error,
-          });
-        }
+        toast.error("Login Failed", {
+          description: result.error,
+        });
       }
 
       if (result?.url) {
@@ -75,7 +69,7 @@ export default function SignInPage() {
         animate={{ opacity: 1, scale: 1 }}
         className="w-full max-w-5xl bg-white rounded-[2.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl min-h-[600px]"
       >
-        {/* Left Side - Visuals */}
+
         <div className="hidden md:block w-1/2 relative overflow-hidden bg-black">
           <Shader className="h-full w-full absolute inset-0">
             <Swirl
@@ -117,7 +111,7 @@ export default function SignInPage() {
           </div>
         </div>
 
-        {/* Right Side - Form */}
+
         <div className="w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center bg-white relative z-20">
           <h2 className="text-3xl font-medium text-center text-zinc-900 mb-2">
             Welcome Back

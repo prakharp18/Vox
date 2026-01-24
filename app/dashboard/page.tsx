@@ -206,7 +206,7 @@ export default function Dashboard() {
                         </span>
                      </div>
                  </div>
-                 
+
                  <div className="grid grid-cols-2 gap-4">
                     <div>
                         <span className="text-zinc-500 text-xs font-semibold tracking-wider uppercase">Total</span>
@@ -223,17 +223,24 @@ export default function Dashboard() {
         <DashboardWindow 
             title="Incoming Feed" 
             className="md:col-span-8 md:row-span-6 bg-[#09090b] border-zinc-800/50 h-[500px] md:h-auto"
+            rightContent={
+                <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 bg-zinc-900/80 px-3 py-1.5 rounded-lg border border-zinc-800/50 max-w-[180px] sm:max-w-none">
+                        <LogOut size={12} className="text-zinc-500 shrink-0" />
+                        <span className="text-[10px] text-zinc-400 font-medium leading-tight line-clamp-2 sm:line-clamp-none">
+                            Security Tip: Always sign out before closing the browser. This clears your active session and prevents "Application error" messages.
+                        </span>
+                    </div>
+                    <button 
+                        onClick={() => fetchMessages(true)}
+                        disabled={isLoading}
+                        className="p-2 hover:bg-zinc-800 rounded-full transition-colors text-zinc-400 hover:text-white"
+                    >
+                        <RefreshCcw size={16} className={isLoading ? "animate-spin" : ""} />
+                    </button>
+                </div>
+            }
         >
-            <div className="absolute top-4 right-6 z-20">
-                 <button 
-                    onClick={() => fetchMessages(true)}
-                    disabled={isLoading}
-                    className="p-2 hover:bg-zinc-800 rounded-full transition-colors text-zinc-400 hover:text-white"
-                 >
-                    <RefreshCcw size={16} className={isLoading ? "animate-spin" : ""} />
-                 </button>
-            </div>
-
             <div className="h-full overflow-y-auto p-4 md:p-6 custom-scrollbar">
                  {isLoading && messages.length === 0 ? (
                      <div className="h-full flex flex-col items-center justify-center">
