@@ -11,16 +11,18 @@ export async function sendVerificationEmail(
   try {
     const emailHtml = await render(<VerificationEmail username={username} otp={verifyCode} />);
 
+    console.time("EmailSend");
     await transporter.sendMail({
       from: process.env.SMTP_FROM_EMAIL || '"Vox" <no-reply@vox.app>',
       to: email,
       subject: "Vox | Verification Code",
       html: emailHtml,
     });
+    console.timeEnd("EmailSend");
     
     return { success: true, message: "Verification email sent successfully." };
   } catch (emailError) {
-    console.error("Error sending verification email", emailError);
+    console.error("Critical SMTP Error:", emailError);
     return { success: false, message: "Failed to send verification email." };
   }
 }
