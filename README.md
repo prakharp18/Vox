@@ -67,7 +67,7 @@ graph TD
 - **UI Components**: Shadcn/ui (Radix Primitives)
 - **Database**: MongoDB (Mongoose ORM)
 - **Authentication**: NextAuth.js v4
-- **Emails**: Resend & React Email
+- **Emails**: Nodemailer & React Email
 
 ## Getting Started
 
@@ -98,7 +98,11 @@ Create a `.env` file in the root directory and add the following:
 ```env
 MONGODB_URI="your_mongodb_connection_string"
 NEXTAUTH_SECRET="your_nextauth_secret"
-RESEND_API_KEY="your_resend_api_key"
+SMTP_HOST="smtp.gmail.com"
+SMTP_PORT="587"
+SMTP_USER="your-email@gmail.com"
+SMTP_PASS="your-app-password"
+SMTP_FROM_EMAIL="Vox <no-reply@vox.app>"
 NEXTAUTH_URL="http://localhost:3000"
 ```
 

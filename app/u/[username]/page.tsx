@@ -29,6 +29,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const specialChar = '||';
 
@@ -115,7 +116,7 @@ export default function SendMessage() {
 
 
   return (
-    <main className="h-screen w-full bg-black text-white flex items-center justify-center p-4 overflow-hidden">
+    <main className="min-h-screen w-full bg-black text-white flex flex-col items-center justify-center p-4 relative overflow-y-auto overflow-x-hidden">
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900/40 via-black to-black" />
 
       <div className="absolute top-6 right-6 z-50 flex items-center gap-4">
@@ -132,10 +133,10 @@ export default function SendMessage() {
          </div>
       </div>
 
-      <div className="relative z-10 w-full max-w-5xl grid grid-cols-1 md:grid-cols-12 gap-4 h-full md:h-[600px]">
+      <div className="relative z-10 w-full max-w-5xl grid grid-cols-1 md:grid-cols-12 gap-4 h-auto md:h-[600px] mt-20 md:mt-0 mb-20 md:mb-0">
         
         <div className="md:col-span-7 flex flex-col gap-4 h-full">
-            <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-center h-[20%]">
+            <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-center min-h-[120px] md:h-[20%]">
                 <h1 className="text-3xl font-bold tracking-tight text-white flex items-center gap-3">
                     VOX <span className="text-zinc-600 font-mono text-lg font-normal">/ PUBLIC</span>
                 </h1>
@@ -153,7 +154,7 @@ export default function SendMessage() {
                 </p>
             </div>
 
-            <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 flex-1 shadow-2xl flex flex-col relative overflow-hidden">
+            <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 flex-1 shadow-2xl flex flex-col relative overflow-hidden min-h-[400px]">
                 {!isAcceptingMessages ? (
                     <div className="absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-sm flex items-center justify-center p-6 text-center">
                         <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl max-w-sm w-full">
@@ -212,9 +213,9 @@ export default function SendMessage() {
             </div>
         </div>
 
-        <div className="md:col-span-5 flex flex-col gap-4 h-full">
+        <div className="md:col-span-5 flex flex-col gap-4 h-auto md:h-full">
             
-            <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 h-[45%] flex flex-col overflow-hidden relative group">
+            <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 h-auto md:h-[45%] flex flex-col overflow-hidden relative group min-h-[250px]">
                  <div className="flex justify-between items-center mb-4">
                     <h3 className="text-zinc-300 text-xs font-mono uppercase tracking-widest flex items-center gap-2">
                         <Wand2 className="w-3 h-3 text-purple-500" />
@@ -260,7 +261,7 @@ export default function SendMessage() {
 
 
 
-            <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 flex-1 flex flex-col overflow-hidden">
+            <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 flex-1 flex flex-col overflow-hidden min-h-[300px]">
                 <h3 className="text-zinc-300 text-xs font-mono uppercase tracking-widest mb-4 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
                     FAQ
@@ -299,16 +300,22 @@ export default function SendMessage() {
 
       </div>
 
-      <footer className="absolute bottom-4 z-50 flex flex-col md:flex-row items-center gap-4 text-xs text-zinc-500 font-medium">
-         <span>&copy; {new Date().getFullYear()} Vox</span>
-         <span className="hidden md:block w-1 h-1 rounded-full bg-zinc-800"></span>
-         <a href="mailto:pizzatusestemp4mail@gmail.com?subject=Report%20Abuse" className="hover:text-zinc-300 transition-colors">
-            Report Abuse
-         </a>
-         <span className="hidden md:block w-1 h-1 rounded-full bg-zinc-800"></span>
-         <a href="mailto:pizzatusestemp4mail@gmail.com?subject=Support%20Request" className="hover:text-zinc-300 transition-colors">
-            Contact Support
-         </a>
+      <footer className="absolute bottom-4 z-50 flex items-center justify-center w-full pointer-events-none md:fixed md:bottom-8">
+        <div className="pointer-events-auto flex items-center justify-center bg-zinc-950 border border-zinc-800 rounded-full pl-1.5 pr-6 h-10 gap-3 w-auto">
+             
+             <div className="relative z-10 shrink-0">
+                <Avatar className="h-7 w-7 border border-zinc-700 bg-zinc-900">
+                    <AvatarImage src="/vox-logo-placeholder.png" alt="VOX" />
+                    <AvatarFallback className="text-[9px] font-bold bg-zinc-900 text-white">VOX</AvatarFallback>
+                </Avatar>
+             </div>
+
+             <div className="flex flex-col items-start justify-center whitespace-nowrap">
+                <span className="text-[10px] text-zinc-500 font-medium leading-none mb-0.5">Contact Support</span>
+                <span className="text-xs text-zinc-200 font-medium leading-none">pizzatusestemp4mail@gmail.com</span>
+             </div>
+
+        </div>
       </footer>
     </main>
   );

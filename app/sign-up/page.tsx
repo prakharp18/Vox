@@ -55,6 +55,12 @@ import {
 } from "@/components/ui/dialog";
 import Link from "next/link";
 import { Shader, Swirl, ChromaFlow } from "shaders/react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const MagneticButton = ({
   children,
@@ -340,6 +346,7 @@ export default function SignUp() {
                                 placeholder="pizzat"
                                 {...field}
                                 className={`bg-zinc-50 border-zinc-200 focus:ring-emerald-500/20 focus:border-emerald-500 text-zinc-900 placeholder:text-zinc-400 pl-10 h-12 rounded-full`}
+                                maxLength={20}
                                 onChange={(e) => {
                                   field.onChange(e);
                                   debounced(e.target.value);
@@ -555,16 +562,25 @@ export default function SignUp() {
               </>
             )}
             {step === 3 && (
-              <button
-                type="button"
-                onClick={handleResend}
-                disabled={resendTimer > 0}
-                className={`font-medium hover:underline transition-colors ${resendTimer > 0 ? "text-zinc-400 cursor-not-allowed" : "text-zinc-900"}`}
-              >
-                {resendTimer > 0
-                  ? `Resend code in ${resendTimer}s`
-                  : "Didn't receive code? Resend"}
-              </button>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      onClick={handleResend}
+                      disabled={resendTimer > 0}
+                      className={`font-medium hover:underline transition-colors ${resendTimer > 0 ? "text-zinc-400 cursor-not-allowed" : "text-zinc-900"}`}
+                    >
+                      {resendTimer > 0
+                        ? `Resend code in ${resendTimer}s`
+                        : "Didn't receive code? Resend"}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Check your spam folder!</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             )}
           </p>
         </div>

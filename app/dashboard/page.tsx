@@ -128,6 +128,19 @@ export default function Dashboard() {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    try {
+        const response = await axios.delete<ApiResponse>('/api/delete-account');
+        toast.success(response.data.message);
+        signOut({ callbackUrl: '/sign-up' });
+    } catch (error) {
+        const axiosError = error as AxiosError<ApiResponse>;
+        toast.error("Error", { 
+            description: axiosError.response?.data.message || "Failed to delete account" 
+        });
+    }
+  };
+
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileLink);
     toast.success("Link Copied!", { description: "Share it with your friends." });
@@ -394,7 +407,7 @@ export default function Dashboard() {
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                                 <AlertDialogCancel className="bg-transparent border-zinc-800 text-white hover:bg-zinc-900">Cancel</AlertDialogCancel>
-                                <AlertDialogAction className="bg-red-600 hover:bg-red-700 text-white">Delete Account</AlertDialogAction>
+                                <AlertDialogAction onClick={handleDeleteAccount} className="bg-red-600 hover:bg-red-700 text-white">Delete Account</AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
                     </AlertDialog>
