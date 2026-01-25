@@ -3,8 +3,9 @@
 import { useEffect } from "react";
 import { GrainOverlay } from "@/components/grain-overlay";
 import { MagneticButton } from "@/components/magnetic-button";
-import { RefreshCcw, AlertTriangle } from "lucide-react";
+import { RefreshCcw, AlertTriangle, LogOut } from "lucide-react";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 
 export default function Error({
   error,
@@ -42,21 +43,14 @@ export default function Error({
 
         <div className="flex gap-4">
              <MagneticButton
-                onClick={() => reset()}
+                onClick={() => signOut({ callbackUrl: "/" })}
                 className="flex items-center gap-2 bg-red-600 px-6 py-3 text-sm font-medium text-white hover:bg-red-700 hover:shadow-[0_0_2rem_rgba(220,38,38,0.4)]"
              >
-                <RefreshCcw className="h-4 w-4" />
-                Reboot System
+                <LogOut className="h-4 w-4" />
+                Force Sign Out
              </MagneticButton>
              
-             <Link href="/">
-                <MagneticButton
-                    variant="ghost"
-                    className="flex items-center gap-2 px-6 py-3 text-sm font-medium text-zinc-400 hover:text-white"
-                >
-                    Return Home
-                </MagneticButton>
-             </Link>
+
         </div>
       </div>
 
