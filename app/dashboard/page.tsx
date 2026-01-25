@@ -225,10 +225,10 @@ export default function Dashboard() {
             className="md:col-span-8 md:row-span-6 bg-[#09090b] border-zinc-800/50 h-[500px] md:h-auto"
             rightContent={
                 <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 bg-zinc-900/80 px-3 py-1.5 rounded-lg border border-zinc-800/50 max-w-[180px] sm:max-w-none">
+                    <div className="flex items-center gap-2 bg-zinc-900/80 px-3 py-1.5 rounded-lg border border-zinc-800/50">
                         <LogOut size={12} className="text-zinc-500 shrink-0" />
-                        <span className="text-[10px] text-zinc-400 font-medium leading-tight line-clamp-2 sm:line-clamp-none">
-                            Security Tip: Always sign out before closing the browser. This clears your active session and prevents "Application error" messages.
+                        <span className="text-[10px] text-zinc-400 font-medium">
+                            Sign out to clear session.
                         </span>
                     </div>
                     <button 

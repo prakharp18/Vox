@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { Loader2, Send, Wand2, Sparkles, RefreshCcw } from 'lucide-react';
+import { Loader2, Send, Wand2, Sparkles, RefreshCcw, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { CardHeader, CardContent, Card } from '@/components/ui/card';
@@ -315,10 +315,13 @@ export default function SendMessage() {
                 </Avatar>
              </div>
 
-             <div className="flex flex-col items-start justify-center whitespace-nowrap">
-                <span className="text-[10px] text-zinc-500 font-medium leading-none mb-0.5">Contact Support</span>
-                <span className="text-xs text-zinc-200 font-medium leading-none">pizzatusestemp4mail@gmail.com</span>
-             </div>
+             <Link href="https://www.linkedin.com/in/pporwal25/" target="_blank" rel="noopener noreferrer" className="flex flex-col items-start justify-center group">
+                <span className="text-[10px] text-zinc-500 font-medium leading-none mb-0.5 group-hover:text-zinc-400 transition-colors">Developer</span>
+                <span className="text-xs text-zinc-200 font-medium leading-none flex items-center gap-1.5 group-hover:text-white transition-colors">
+                    <Linkedin className="w-3 h-3 text-[#0a66c2]" />
+                    Prakhar Porwal
+                </span>
+             </Link>
 
         </div>
       </footer>

@@ -3,12 +3,23 @@ import dbConnect from '@/lib/dbConnect';
 import UserModel from '@/model/user';
 import { messageSchema } from '@/schemas/messageSchema';
 import { Message } from '@/model/user';
+import { messageRateLimiter } from '@/lib/rate-limit';
 
 export async function POST(req: Request) {
   await dbConnect();
 
   try {
     const { username, content } = await req.json();
+
+    try {
+      const ip = req.headers.get("x-forwarded-for") || "127.0.0.1";
+      await messageRateLimiter.check(10, ip);
+    } catch {
+      return NextResponse.json(
+        { message: "Too many requests. Please try again later." },
+        { status: 429 }
+      );
+    }
 
     const user = await UserModel.findOne({ username });
     if (!user) {

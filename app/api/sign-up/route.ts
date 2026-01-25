@@ -2,12 +2,26 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/user";
 import bcrypt from "bcryptjs";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
+import { authRateLimiter } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
   await dbConnect();
 
   try {
     const { username, email, password } = await request.json();
+
+    try {
+      const ip = request.headers.get("x-forwarded-for") || "127.0.0.1";
+      await authRateLimiter.check(3, ip);
+    } catch {
+       return Response.json(
+        {
+          success: false,
+          message: "Too many sign-up attempts. Please try again later.",
+        },
+        { status: 429 },
+      );
+    }
 
 
     const existingVerifiedUserByUsername = await UserModel.findOne({
