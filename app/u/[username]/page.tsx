@@ -181,14 +181,20 @@ export default function SendMessage() {
                                         <Sparkles className="w-3 h-3 text-indigo-500" />
                                         Compose Message
                                     </FormLabel>
-                                    <FormControl>
-                                        <Textarea
-                                            placeholder="Type something anonymous..."
-                                            className="flex-1 bg-zinc-900/50 border-zinc-800 text-white placeholder:text-zinc-600 text-lg md:text-xl p-4 resize-none focus-visible:ring-1 focus-visible:ring-white/20 focus-visible:border-white/20 rounded-xl leading-relaxed"
-                                            {...field}
-                                            disabled={!isAcceptingMessages}
-                                        />
-                                    </FormControl>
+                                            <FormControl>
+                                                <div className="relative flex-1 flex flex-col">
+                                                    <Textarea
+                                                        placeholder="Type something anonymous..."
+                                                        className="flex-1 bg-zinc-900/50 border-zinc-800 text-white placeholder:text-zinc-600 text-lg md:text-xl p-4 resize-none focus-visible:ring-1 focus-visible:ring-white/20 focus-visible:border-white/20 rounded-xl leading-relaxed"
+                                                        {...field}
+                                                        maxLength={150}
+                                                        disabled={!isAcceptingMessages}
+                                                    />
+                                                    <div className="absolute bottom-3 right-3 text-[10px] font-mono text-zinc-600">
+                                                        {field.value.length}/150
+                                                    </div>
+                                                </div>
+                                            </FormControl>
                                     <FormMessage className="text-red-400 mt-2" />
                                 </FormItem>
                             )}

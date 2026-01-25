@@ -108,14 +108,19 @@ export function ShareModal({ message, username, trigger }: ShareModalProps) {
 
 
         <div className="px-6 mb-4 space-y-3">
-            <input 
-                type="text" 
-                placeholder="Type your reply here..."
-                value={reply}
-                maxLength={50}
-                onChange={(e) => setReply(e.target.value)}
-                className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-emerald-500/50"
-            />
+            <div className="relative">
+                <input 
+                    type="text" 
+                    placeholder="Type your reply here..."
+                    value={reply}
+                    maxLength={50}
+                    onChange={(e) => setReply(e.target.value)}
+                    className="w-full bg-zinc-900 border border-zinc-800 rounded-lg pl-3 pr-10 py-2 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-emerald-500/50"
+                />
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-mono text-zinc-600">
+                    {reply.length}/50
+                </div>
+            </div>
             
             <div className="flex justify-center gap-2">
                 {themes.map((theme, index) => (
@@ -149,7 +154,7 @@ export function ShareModal({ message, username, trigger }: ShareModalProps) {
                  <div className="flex-1 flex flex-col justify-center min-h-0">
                     <div className="p-5 rounded-2xl shadow-lg mb-4" style={{ backgroundColor: 'rgba(255,255,255,0.1)', borderColor: 'rgba(255,255,255,0.2)', borderWidth: '1px', borderStyle: 'solid' }}>
                         <p className="font-medium text-lg leading-relaxed font-sans break-words whitespace-pre-wrap" style={{ color: '#ffffff', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
-                            {message}
+                            {message.length > 100 ? `${message.substring(0, 100)}...` : message}
                         </p>
                     </div>
 
