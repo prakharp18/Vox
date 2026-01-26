@@ -118,7 +118,7 @@ export function ShareModal({ message, username, trigger }: ShareModalProps) {
         await navigator.share({
           files: [file],
           title: "Share Message",
-          text: "Check this out on VOX!",
+          text: `Send your own anonymous message: ${window.location.origin}`,
         });
         toast.success("Shared successfully!");
       } else {
