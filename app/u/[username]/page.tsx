@@ -30,6 +30,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import NotFound from "@/app/not-found";
 
 const specialChar = '||';
 
@@ -99,6 +100,8 @@ export default function SendMessage() {
   const [isAcceptingMessages, setIsAcceptingMessages] = useState(true);
   const [isCheckingDB, setIsCheckingDB] = useState(true);
 
+  const [isValidUser, setIsValidUser] = useState(true);
+
   React.useEffect(() => {
     const fetchStatus = async () => {
         setIsCheckingDB(true);
@@ -106,12 +109,20 @@ export default function SendMessage() {
             const response = await axios.get<ApiResponse>(`/api/check-username?username=${username}`);
             setIsAcceptingMessages(response.data.isAcceptingMessages ?? true);
         } catch (error) {
+            const axiosError = error as AxiosError;
+            if (axiosError.response?.status === 404) {
+                setIsValidUser(false);
+            }
         } finally {
             setIsCheckingDB(false);
         }
     };
     fetchStatus();
   }, [username]);
+
+  if (!isValidUser) {
+      return <NotFound />;
+  }
 
 
   return (
