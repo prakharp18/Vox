@@ -125,9 +125,7 @@ export function ShareModal({ message, username, trigger }: ShareModalProps) {
         throw new Error("Web Share API not supported");
       }
     } catch (error) {
-      // Ignore abort errors (user cancelled share)
       if ((error as Error).name !== "AbortError") {
-        // If share fails or isn't supported, fallback to download
         toast.error("Sharing not supported on this device. Saving instead...");
         handleDownload();
       }
