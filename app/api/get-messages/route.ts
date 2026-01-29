@@ -36,7 +36,6 @@ export async function GET(request: Request) {
       );
     }
 
-    // Filter out any empty objects that might result from preserving null/empty arrays if messages was originally empty
     const messages = user[0].messages.filter((msg: any) => Object.keys(msg).length > 0);
 
     return NextResponse.json(

@@ -176,6 +176,15 @@ export default function SignInPage() {
                 )}
               />
 
+              <div className="flex justify-end pt-1">
+                <Link
+                  href="/forgot-password"
+                  className="text-sm text-zinc-500 hover:text-zinc-900 font-medium hover:underline transition-colors"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+
               <div className="pt-2">
                 <MagneticButton
                   type="submit"

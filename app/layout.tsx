@@ -32,19 +32,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <AuthProvider>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
-          suppressHydrationWarning
-        >
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
+        suppressHydrationWarning
+      >
+        <AuthProvider>
           <SmoothScrolling>
             <CustomCursor />
             {children}
           </SmoothScrolling>
           <Analytics />
           <Toaster richColors position="bottom-right" />
-        </body>
-      </AuthProvider>
+        </AuthProvider>
+      </body>
     </html>
   );
 }
