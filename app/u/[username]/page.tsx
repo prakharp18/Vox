@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { Loader2, Send, Wand2, Sparkles, RefreshCcw, Linkedin } from 'lucide-react';
+import { Loader2, Send, Wand2, Sparkles, RefreshCcw, Linkedin, ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { CardHeader, CardContent, Card } from '@/components/ui/card';
@@ -282,7 +282,10 @@ export default function SendMessage() {
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
                     FAQ
                 </h3>
-                <div className='overflow-y-auto custom-scrollbar pr-2'>
+                <div 
+                    className='overflow-y-auto custom-scrollbar pr-2 flex-1 min-h-0'
+                    data-lenis-prevent
+                >
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="item-1" className='border-zinc-800'>
                             <AccordionTrigger className='text-zinc-300 hover:text-white text-sm'>Is my identity hidden?</AccordionTrigger>
@@ -317,7 +320,7 @@ export default function SendMessage() {
       </div>
 
       <footer className="absolute bottom-4 z-50 flex items-center justify-center w-full pointer-events-none md:fixed md:bottom-8">
-        <div className="pointer-events-auto flex items-center justify-center bg-zinc-950 border border-zinc-800 rounded-full pl-1.5 pr-6 h-10 gap-3 w-auto">
+        <div className="pointer-events-auto flex items-center justify-center bg-zinc-950 border border-zinc-800 rounded-full pl-1.5 pr-6 h-10 gap-3 w-auto shadow-2xl">
              
              <div className="relative z-10 shrink-0">
                 <Avatar className="h-7 w-7 border border-zinc-700 bg-zinc-900">
@@ -333,6 +336,29 @@ export default function SendMessage() {
                     Prakhar Porwal
                 </span>
              </Link>
+
+             <div className="w-px h-6 bg-zinc-800 mx-1" />
+
+             <Link href="https://pizzafolio.netlify.app/" target="_blank" rel="noopener noreferrer" className="flex flex-col items-start justify-center group">
+                <span className="text-[10px] text-zinc-500 font-medium leading-none mb-0.5 group-hover:text-zinc-400 transition-colors">Portfolio</span>
+                <span className="text-xs text-zinc-200 font-medium leading-none flex items-center gap-1.5 group-hover:text-white transition-colors">
+                    Pizzafolio
+                    <ArrowUpRight className="w-3 h-3 text-zinc-500 group-hover:text-zinc-300" />
+                </span>
+             </Link>
+
+             <div className="w-px h-6 bg-zinc-800 mx-1" />
+
+             <div className="flex flex-col items-start justify-center">
+                <span className="text-[10px] text-zinc-500 font-medium leading-none mb-0.5">Status</span>
+                <span className="text-xs text-emerald-400 font-medium leading-none flex items-center gap-1.5">
+                    <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    Available for work
+                </span>
+             </div>
 
         </div>
       </footer>
